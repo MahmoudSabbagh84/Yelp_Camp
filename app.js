@@ -134,19 +134,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req,res,next) =>{
-    console.log(req.session);
+app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
-app.get('/fakeUser' ,async(req,res) =>{
-    const user = new User({email: 'coltt@gmail.com' , username: 'colttt'});
-    const newUser = await User.register(user , 'monkey');
-    res.send(newUser);
-})
 
 app.use('/',userRoutes);
 app.use('/campgrounds',campgroundRoutes);
